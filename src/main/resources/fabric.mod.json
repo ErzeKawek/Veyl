@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "veyl",
+  "version": "${version}",
+  "name": "Veyl",
+  "description": "A Library for generating data-driven worldgen.",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/veyl/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "net.erzekawek.veyl.client.VeylDataGenerator"
+    ],
+    "client": [
+      "net.erzekawek.veyl.client.VeylClient"
+    ],
+    "main": [
+      "net.erzekawek.veyl.Veyl"
+    ]
+  },
+  "mixins": [
+    "veyl.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
