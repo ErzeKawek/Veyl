@@ -1,6 +1,6 @@
 package net.erzekawek.veyl.blocks;
 
-import net.erzekawek.veyl.items.AbstractConsumableItem;
+import net.erzekawek.veyl.items.AbstractUsableItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -39,7 +39,7 @@ public class AbstractLockableDoor extends DoorBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!(stack.getItem() instanceof AbstractConsumableItem key)) {
+        if (!(stack.getItem() instanceof AbstractUsableItem key)) {
             return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
         if (level.isClientSide()) {

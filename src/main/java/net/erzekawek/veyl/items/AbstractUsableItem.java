@@ -2,10 +2,10 @@ package net.erzekawek.veyl.items;
 
 import net.minecraft.world.item.Item;
 
-public class AbstractConsumableItem extends Item {
+public class AbstractUsableItem extends Item {
     private final boolean consume;
 
-    public AbstractConsumableItem(Properties properties, boolean consume) {
+    public AbstractUsableItem(Properties properties, boolean consume) {
         super(properties);
         this.consume = consume;
     }
