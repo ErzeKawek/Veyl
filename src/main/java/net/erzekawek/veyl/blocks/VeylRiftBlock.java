@@ -11,12 +11,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 
-public class AbstractRiftBlock extends Block {
+public class VeylRiftBlock extends Block {
     private final ResourceKey<Level> targetDimension;
     private final Vec3 targetPosition;
     private final float targetYaw;
 
-    public AbstractRiftBlock(Properties settings, ResourceKey<Level> dimension, Vec3 pos, float yaw) {
+    public VeylRiftBlock(Properties settings, ResourceKey<Level> dimension, Vec3 pos, float yaw) {
         super(settings);
         this.targetDimension = dimension;
         this.targetPosition = pos;
