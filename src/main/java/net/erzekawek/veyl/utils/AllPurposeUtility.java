@@ -1,5 +1,6 @@
 package net.erzekawek.veyl.utils;
 
+import net.erzekawek.veyl.utils.misc.Flags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;

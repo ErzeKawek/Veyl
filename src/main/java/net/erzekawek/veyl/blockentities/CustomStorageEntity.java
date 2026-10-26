@@ -1,7 +1,7 @@
 package net.erzekawek.veyl.blockentities;
 
 import net.erzekawek.veyl.blocks.VeylConfigurableStorageBlock;
-import net.erzekawek.veyl.utils.LimitedContainer;
+import net.erzekawek.veyl.utils.misc.LimitedContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,6 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;

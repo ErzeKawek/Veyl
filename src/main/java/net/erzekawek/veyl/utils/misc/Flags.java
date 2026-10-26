@@ -1,4 +1,4 @@
-package net.erzekawek.veyl.utils;
+package net.erzekawek.veyl.utils.misc;
 
 public class Flags {
     public static final int FLAG_UPDATE_BLOCK = 1;

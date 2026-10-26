@@ -1,4 +1,4 @@
-package net.erzekawek.veyl.utils;
+package net.erzekawek.veyl.utils.misc;
 
 import net.minecraft.world.food.FoodProperties;
 
