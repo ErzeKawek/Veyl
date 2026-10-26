@@ -32,7 +32,9 @@ public final class MazeRegion {
             return build(s, rx, rz, occ);
         });
     }
-    public static void clearCache() { CACHE.clear(); }
+    public static void clearCache() {
+        CACHE.clear();
+    }
 
     /** A piece placed in the region (single cell or multi-cell room). Coordinates are region-local cells. */
     public static final class Placement {
@@ -56,7 +58,7 @@ public final class MazeRegion {
         int lx = (occ.n - st.cellsW) / 2, lz = (occ.n - st.cellsD) / 2;
         List<Port> ports = st.portsRotated(0, 0);
         if (!occ.fits(st.cellsW, st.cellsD, lx, lz, ports)) {
-            Veyl.LOGGER.error("[Veyl] start room {} doesn't fit ; please raise region size", s.group());
+            Veyl.LOGGER.error("[Veyl] start room {} doesn't fit, please raise region size", s.group());
             return;
         }
         occ.place(st, 0, lx, lz, ports, s.baseY() + st.def.yOffset(), null);

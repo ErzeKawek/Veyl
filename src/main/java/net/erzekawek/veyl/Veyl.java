@@ -5,6 +5,8 @@ import net.erzekawek.veyl.levelgen.chunkgen.gen.MazeRegion;
 import net.erzekawek.veyl.levelgen.chunkgen.gen.MultiStoryChunkGenerator;
 import net.erzekawek.veyl.levelgen.chunkgen.gen.MultiStoryRegion;
 import net.erzekawek.veyl.levelgen.chunkgen.rooms.RoomGroup;
+import net.erzekawek.veyl.utils.registry.CBlock;
+import net.erzekawek.veyl.utils.registry.UnifiedRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.core.Registry;
@@ -26,10 +28,6 @@ public class Veyl implements ModInitializer {
         return Identifier.fromNamespaceAndPath(MOD_ID, name);
     }
 
-    public static Identifier findRoom(String path, String name) {
-        return id(path + "/" + name);
-    }
-
     private static volatile MinecraftServer server;
     public static MinecraftServer server() {
         return server;
@@ -38,6 +36,8 @@ public class Veyl implements ModInitializer {
     @Override
     public void onInitialize() {
 
+        UnifiedRegistry.initialize();
+        CBlock.initialize();
 
         Registry.register(BuiltInRegistries.CHUNK_GENERATOR, id("maze"), MazeChunkGenerator.CODEC);
         Registry.register(BuiltInRegistries.CHUNK_GENERATOR, id("multistory"), MultiStoryChunkGenerator.CODEC);

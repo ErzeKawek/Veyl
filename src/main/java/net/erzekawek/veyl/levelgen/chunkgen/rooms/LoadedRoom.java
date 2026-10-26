@@ -161,9 +161,9 @@ public final class LoadedRoom {
         List<List<Port>> base = new ArrayList<>();
         for (Set<Port> set : sets) base.add(List.copyOf(set));
 
-        if (g0 != null && base.get(0).isEmpty()) Veyl.LOGGER.warn("[Veyl] {} yo bro wher da guides ({}), i not connecting", def.nbt(), g0);
+        if (g0 != null && base.get(0).isEmpty()) Veyl.LOGGER.warn("[Veyl] {} Where is the guides??? ({}), Will not connect", def.nbt(), g0);
         if (g0 == null && (base.get(1).isEmpty() || base.get(2).isEmpty()))
-            Veyl.LOGGER.warn("[Veyl] yo ts stairway {} needs BOTH da lower and upper guide blocks (found {} lower, {} upper); it will not spawn",
+            Veyl.LOGGER.warn("[Veyl] This stairway {} needs BOTH the lower and upper guide blocks (found {} lower, {} upper); it will not spawn",
                     def.nbt(), base.get(1).size(), base.get(2).size());
 
         return new LoadedRoom(def, sx, sy, sz,

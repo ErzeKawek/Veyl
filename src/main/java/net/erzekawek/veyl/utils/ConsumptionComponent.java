@@ -4,7 +4,7 @@ import net.minecraft.world.food.FoodProperties;
 
 public class ConsumptionComponent {
 
-    public static final FoodProperties EXTREMELY_BAD = new FoodProperties.Builder()
+    public static final FoodProperties WORST = new FoodProperties.Builder()
             .nutrition(1)
             .saturationModifier(0.2F)
             .alwaysEdible()
