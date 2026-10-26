@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class CBlock {
 
-    private static Block makeRift(String modid, String name, int light, ResourceKey<Level> dim, int destX, int destY, int destZ, float yaw) {
+    public static Block makeRift(String modid, String name, int light, ResourceKey<Level> dim, int destX, int destY, int destZ, float yaw) {
         return UnifiedRegistry.registerBlock(modid, name, settings -> new VeylRiftBlock(
                 BlockBehaviour.Properties.of()
                         .noCollision()
@@ -26,7 +26,7 @@ public class CBlock {
                 new Vec3(destX, destY, destZ), yaw));
     }
 
-    private static Block makeDoublePlant(String modid, String name, TagKey<Block> placeableOn) {
+    public static Block makeDoublePlant(String modid, String name, TagKey<Block> placeableOn) {
         return UnifiedRegistry.registerBlock(modid, name, settings -> new VeylDoublePlantBlock(
                 placeableOn,
                 BlockBehaviour.Properties.of()
@@ -38,7 +38,7 @@ public class CBlock {
                         .setId(settings.blockId())));
     }
 
-    private static Block makeLight(String modid, String name, int light) {
+    public static Block makeLight(String modid, String name, int light) {
         return UnifiedRegistry.registerBlock(modid, name, settings -> new Block(BlockBehaviour.Properties.of()
                 .strength(-1, 3600000)
                 .sound(SoundType.STONE)
@@ -48,7 +48,7 @@ public class CBlock {
                 .setId(settings.blockId())));
     }
 
-    private static Block makeUnbreakable(String modid, String name, int light) {
+    public static Block makeUnbreakable(String modid, String name, int light) {
         return UnifiedRegistry.registerBlock(modid, name, settings -> new Block(BlockBehaviour.Properties.of()
                 .strength(-1, 3600000)
                 .sound(SoundType.STONE)
