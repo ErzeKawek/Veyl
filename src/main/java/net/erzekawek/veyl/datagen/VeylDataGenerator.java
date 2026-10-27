@@ -1,4 +1,4 @@
-package net.erzekawek.veyl.client;
+package net.erzekawek.veyl.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;

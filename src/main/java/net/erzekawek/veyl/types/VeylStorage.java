@@ -1,4 +1,4 @@
-package net.erzekawek.veyl.registry;
+package net.erzekawek.veyl.types;
 
 import net.erzekawek.veyl.blockentities.CustomStorageEntity;
 import net.erzekawek.veyl.blocks.VeylConfigurableStorageBlock;

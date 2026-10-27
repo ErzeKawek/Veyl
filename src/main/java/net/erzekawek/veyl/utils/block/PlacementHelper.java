@@ -7,9 +7,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class PlacementHelper {
 
-    private static void setWithoutUpdate(LevelAccessor world, BlockPos pos, BlockState state) {
-        synchronized (world) {
-            world.setBlock(pos, state, Flags.SILENT);
+    public static void setWithoutUpdate(LevelAccessor level, BlockPos pos, BlockState state) {
+        synchronized (level) {
+            level.setBlock(pos, state, Flags.SILENT);
         }
     }
 

@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "net.erzekawek.veyl.client.VeylDataGenerator"
+      "net.erzekawek.veyl.datagen.VeylDataGenerator"
     ],
     "client": [
       "net.erzekawek.veyl.client.VeylClient"
