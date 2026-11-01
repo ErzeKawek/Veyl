@@ -8,10 +8,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.WorldGenRegion;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
@@ -63,6 +60,22 @@ public final class MazeChunkGenerator extends ChunkGenerator {
     public CompletableFuture<ChunkAccess> buildTerrain(ChunkAccess chunk, Blender blender, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, @Nullable WorldGenRegion carverBiomeRegion, Set<Holder<Biome>> possibleBiomes) {
         generateMaze(chunk);
         return CompletableFuture.completedFuture(chunk);
+    }
+
+    @Override
+    public void applyBiomeDecoration(WorldGenLevel level, ChunkAccess chunk, StructureManager structures) {
+        super.applyBiomeDecoration(level, chunk, structures);   // keep whatever the biome already did
+
+        ChunkPos cp = chunk.getPos();
+        int minX = cp.getMinBlockX(), minZ = cp.getMinBlockZ(), maxX = minX + 15, maxZ = minZ + 15;
+        int cs = settings.cellSize(), n = settings.regionSize();
+        Set<Object> done = Collections.newSetFromMap(new IdentityHashMap<>());
+        for (int cx = Math.floorDiv(minX, cs); cx <= Math.floorDiv(maxX, cs); cx++)
+            for (int cz = Math.floorDiv(minZ, cs); cz <= Math.floorDiv(maxZ, cs); cz++) {
+                MazeRegion.Placement p = MazeRegion.get(settings, Math.floorDiv(cx, n), Math.floorDiv(cz, n))
+                        .at(Math.floorMod(cx, n), Math.floorMod(cz, n));
+                if (p != null && done.add(p.pasteId)) ChunkPaster.spawnEntities(level, p, minX, minZ);
+            }
     }
 
     /** The Maze Logic itself */

@@ -24,6 +24,7 @@ public final class LoadedRoom {
     public final RoomGroup.RoomDef def;
     public final int sx, sy, sz, cellsW, cellsD;
     public final int openMask;
+    public final List<EntityInfo> entities;
 
     private final List<List<Port>> basePorts;
     @SuppressWarnings("unchecked")
@@ -32,6 +33,7 @@ public final class LoadedRoom {
     private final int[] xs, ys, zs;
     private final BlockState[] states;
     private final CompoundTag[] nbts;
+    public record EntityInfo(double x, double y, double z, CompoundTag nbt) {}
 
     public static final class Rotated {
         public final int[] xs, ys, zs;
@@ -43,11 +45,12 @@ public final class LoadedRoom {
         }
     }
 
-    private LoadedRoom(RoomGroup.RoomDef def, int sx, int sy, int sz, int[] xs, int[] ys, int[] zs, BlockState[] st, CompoundTag[] nbts, List<List<Port>> basePorts) {
+    private LoadedRoom(RoomGroup.RoomDef def, int sx, int sy, int sz, int[] xs, int[] ys, int[] zs, BlockState[] st, CompoundTag[] nbts, List<List<Port>> basePorts, List<EntityInfo> entities) {
         this.def = def; this.sx = sx; this.sy = sy; this.sz = sz;
         this.xs = xs; this.ys = ys; this.zs = zs; this.states = st; this.nbts = nbts;
         this.cellsW = def.cellsX(); this.cellsD = def.cellsZ();
         this.basePorts = basePorts;
+        this.entities = entities;
         int m = 0; for (Port p : basePorts.get(0)) m |= p.side().bit;
         this.openMask = m;
     }
@@ -166,9 +169,20 @@ public final class LoadedRoom {
             Veyl.LOGGER.warn("[Veyl] This stairway {} needs BOTH the lower and upper guide blocks (found {} lower, {} upper); it will not spawn",
                     def.nbt(), base.get(1).size(), base.get(2).size());
 
+        List<EntityInfo> ents = new ArrayList<>();
+        ListTag entityTags = tag.getListOrEmpty("entities");
+        for (int i = 0; i < entityTags.size(); i++) {
+            CompoundTag e = entityTags.getCompoundOrEmpty(i);
+            ListTag p = e.getListOrEmpty("pos");
+            CompoundTag nbt = e.getCompound("nbt").orElse(null);
+            if (nbt == null) continue;
+            ents.add(new EntityInfo(p.getDoubleOr(0, 0), p.getDoubleOr(1, 0), p.getDoubleOr(2, 0), nbt));
+        }
+
+
         return new LoadedRoom(def, sx, sy, sz,
                 Arrays.copyOf(xs, count), Arrays.copyOf(ys, count), Arrays.copyOf(zs, count),
-                Arrays.copyOf(st, count), Arrays.copyOf(nb, count), base);
+                Arrays.copyOf(st, count), Arrays.copyOf(nb, count), base, List.copyOf(ents));
     }
 
     private static Port portAt(RoomGroup.RoomDef def, int cellSize, int x, int z, int sx, int sz) {

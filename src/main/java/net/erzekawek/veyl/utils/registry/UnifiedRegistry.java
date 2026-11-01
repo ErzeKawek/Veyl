@@ -8,6 +8,7 @@ import net.minecraft.references.BlockItemId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -134,6 +135,10 @@ public class UnifiedRegistry {
                 );
 
         return registerItem(modid, "music_disc_" + diskName, settings);
+    }
+
+    public static <E extends MobEffect> Holder<MobEffect> registerEffect(String modid, String name, E effect) {
+        return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Identifier.fromNamespaceAndPath(modid, name), effect);
     }
 
     public static void initialize() {

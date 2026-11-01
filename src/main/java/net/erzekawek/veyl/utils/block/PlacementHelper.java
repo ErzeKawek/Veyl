@@ -13,4 +13,10 @@ public class PlacementHelper {
         }
     }
 
+    public static void repBlock(LevelAccessor level, BlockPos pos, BlockState state) {
+        synchronized (level) {
+            level.setBlock(pos, state, Flags.CL_KNOWN_SHAPE);
+        }
+    }
+
 }

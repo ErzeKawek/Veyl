@@ -30,7 +30,7 @@ public final class VeylStorage {
 
     public static Entry register(Identifier id, UnaryOperator<BlockBehaviour.Properties> properties, Function<BlockBehaviour.Properties, ? extends VeylConfigurableStorageBlock> factory) {
         ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, id);
-        BlockBehaviour.Properties props = properties.apply(BlockBehaviour.Properties.of().setId(blockKey));
+        BlockBehaviour.Properties props = properties.apply(BlockBehaviour.Properties.of()).setId(blockKey);
         VeylConfigurableStorageBlock block = Registry.register(BuiltInRegistries.BLOCK, blockKey, factory.apply(props));
 
         ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, id);
