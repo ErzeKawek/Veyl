@@ -28,12 +28,18 @@ final class ChunkPaster {
     static void spawnEntities(WorldGenLevel level, MazeRegion.Placement p, int minX, int minZ) {
         LoadedRoom room = p.room;
         for (LoadedRoom.EntityInfo e : room.entities) {
-            // rotate the position the same way the blocks were rotated
-            double x = e.x(), z = e.z(); int w = room.sx, d = room.sz;
-            for (int r = 0; r < p.rot; r++) { double nx = d - z; z = x; x = nx; int t = w; w = d; d = t; }
+            // rotate the exact position and the anchor block the same way the blocks were rotated
+            double x = e.x(), z = e.z();
+            int bx = e.bx(), bz = e.bz();
+            int w = room.sx, d = room.sz;
+            for (int r = 0; r < p.rot; r++) {
+                double nx = d - z; z = x; x = nx;
+                int nbx = d - 1 - bz; bz = bx; bx = nbx;
+                int t = w; w = d; d = t;
+            }
 
             final double wx = p.blockX + x, wy = p.blockY + e.y(), wz = p.blockZ + z;
-            if (wx < minX || wx >= minX + 16 || wz < minZ || wz >= minZ + 16) continue;   // each entity is spawned by exactly one chunk
+            if (wx < minX || wx >= minX + 16 || wz < minZ || wz >= minZ + 16) continue;
 
             CompoundTag tag = e.nbt().copy();
             ListTag pos = new ListTag();
@@ -41,10 +47,15 @@ final class ChunkPaster {
             tag.put("Pos", pos);
             tag.remove("UUID");
 
-            ValueInput input = TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), tag);
+            // the fix: replace the stale build-site anchor with the real one
+            tag.putIntArray("block_pos", new int[]{p.blockX + bx, p.blockY + e.by(), p.blockZ + bz});
+            tag.remove("TileX");
+            tag.remove("TileY");
+            tag.remove("TileZ");
 
-            // COPY THIS LOAD LINE from StructureTemplate.createEntityIgnoreException in your 26.3 sources
-            Optional<Entity> loaded = EntityType.create(input, level.getLevel(), new EntitySpawnRequest(EntitySpawnReason.STRUCTURE, true));
+            ValueInput input = TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), tag);
+            Optional<Entity> loaded = EntityType.create(input, level.getLevel(),
+                    new EntitySpawnRequest(EntitySpawnReason.STRUCTURE, true));
 
             loaded.ifPresent(entity -> {
                 float yaw = entity.rotate(Rotation.values()[p.rot]);

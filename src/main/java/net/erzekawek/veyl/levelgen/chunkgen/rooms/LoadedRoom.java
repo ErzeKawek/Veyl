@@ -33,7 +33,9 @@ public final class LoadedRoom {
     private final int[] xs, ys, zs;
     private final BlockState[] states;
     private final CompoundTag[] nbts;
-    public record EntityInfo(double x, double y, double z, CompoundTag nbt) {}
+    public record EntityInfo(double x, double y, double z, int bx, int by, int bz, CompoundTag nbt) {
+
+    }
 
     public static final class Rotated {
         public final int[] xs, ys, zs;
@@ -174,11 +176,13 @@ public final class LoadedRoom {
         for (int i = 0; i < entityTags.size(); i++) {
             CompoundTag e = entityTags.getCompoundOrEmpty(i);
             ListTag p = e.getListOrEmpty("pos");
+            ListTag bp = e.getListOrEmpty("blockPos");
             CompoundTag nbt = e.getCompound("nbt").orElse(null);
             if (nbt == null) continue;
-            ents.add(new EntityInfo(p.getDoubleOr(0, 0), p.getDoubleOr(1, 0), p.getDoubleOr(2, 0), nbt));
+            ents.add(new EntityInfo(
+                    p.getDoubleOr(0, 0), p.getDoubleOr(1, 0), p.getDoubleOr(2, 0),
+                    bp.getIntOr(0, 0), bp.getIntOr(1, 0), bp.getIntOr(2, 0), nbt));
         }
-
 
         return new LoadedRoom(def, sx, sy, sz,
                 Arrays.copyOf(xs, count), Arrays.copyOf(ys, count), Arrays.copyOf(zs, count),
